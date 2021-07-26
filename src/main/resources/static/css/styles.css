@@ -1,0 +1,50 @@
+.welcomeMain {
+	display: flex;
+}
+
+.main-image {
+	width: 100vw;
+	height: 97vh;
+	margin-right: auto;
+	object-fit: none;
+}
+
+.info-wrapper {
+	width: 100%;
+	height: 97vh;
+}
+
+.info {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	margin: 45vh 100px 0 5vw;
+}
+
+.info button {
+	margin: 10px 17vw 10px 0vw;
+}
+
+footer .nav-link {
+	color: white !important;
+	margin-bottom: 0px;
+}
+
+footer {
+	height: 3vh;
+}
+
+.icon {
+	border-radius: 100%;
+	height: 40px;
+}
+
+main {
+	padding-top: 80px;
+}
+
+.postMedia {
+	border-radius: 1%;
+	width: fill;
+	height: auto;
+}
