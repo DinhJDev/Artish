@@ -3,9 +3,12 @@ package com.artish.models;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -16,8 +19,12 @@ public class Role {
  @GeneratedValue(strategy=GenerationType.IDENTITY)
  private Long id;
  private String name;
- @ManyToMany(mappedBy = "roles")
- private List<Login> users;
+ @ManyToMany(fetch = FetchType.EAGER)
+ @JoinTable(
+	     name = "logins_roles", 
+	     joinColumns = @JoinColumn(name = "role_id"), 
+	     inverseJoinColumns = @JoinColumn(name = "login_id"))
+ private List<Login> logins;
  
  public Role() {
  }
@@ -34,11 +41,13 @@ public class Role {
  public void setName(String name) {
      this.name = name;
  }
- public List<Login> getUsers() {
-     return users;
- }
- public void setUsers(List<Login> users) {
-     this.users = users;
- }
+
+	public List<Login> getLogins() {
+		return logins;
+	}
+	
+	public void setLogins(List<Login> logins) {
+		this.logins = logins;
+	}
 }
 

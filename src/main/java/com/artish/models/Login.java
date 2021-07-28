@@ -19,7 +19,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table(name="users")
+@Table(name="logins")
 public class Login {
  
  @Id
@@ -34,8 +34,8 @@ public class Login {
  private Date updatedAt;
  @ManyToMany(fetch = FetchType.EAGER)
  @JoinTable(
-     name = "users_roles", 
-     joinColumns = @JoinColumn(name = "user_id"), 
+     name = "logins_roles", 
+     joinColumns = @JoinColumn(name = "login_id"), 
      inverseJoinColumns = @JoinColumn(name = "role_id"))
  private List<Role> roles;
  @OneToOne(fetch=FetchType.LAZY)

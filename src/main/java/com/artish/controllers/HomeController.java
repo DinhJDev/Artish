@@ -22,14 +22,14 @@ public class HomeController {
 	@Autowired
 	LoginService userService;
 	
-	@GetMapping("/registration")
+	@GetMapping("/")
     public String registerForm(@Valid @ModelAttribute("user") Login user) {
-        return "registrationPage.jsp";
+        return "welcomePage.jsp";
     }
 	@PostMapping("/registration")
     public String registration(@Valid @ModelAttribute("user") Login user, BindingResult result, Model model, HttpSession session) {
         if (result.hasErrors()) {
-            return "registrationPage.jsp";
+            return "welcomePage.jsp";
         }
         userService.saveWithUserRole(user);
         return "redirect:/login";
@@ -51,7 +51,7 @@ public class HomeController {
         }
         return "loginPage.jsp";
     }
-    @GetMapping(value = {"/", "/home"})
+    @GetMapping(value = {"/home"})
     public String home(Principal principal, Model model) {
         String username = principal.getName();
         model.addAttribute("currentUser", userService.findByUsername(username));
