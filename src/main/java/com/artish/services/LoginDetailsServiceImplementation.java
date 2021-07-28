@@ -10,19 +10,19 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import com.artish.models.Role;
-import com.artish.models.User;
-import com.artish.repositories.UserRepository;
+import com.artish.models.Login;
+import com.artish.repositories.LoginRepository;
 @Service
-public class UserDetailsServiceImplementation implements UserDetailsService {
-    private UserRepository userRepository;
+public class LoginDetailsServiceImplementation implements UserDetailsService {
+    private LoginRepository userRepository;
     
-    public UserDetailsServiceImplementation(UserRepository userRepository){
+    public LoginDetailsServiceImplementation(LoginRepository userRepository){
         this.userRepository = userRepository;
     }
     // 1
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
+        Login user = userRepository.findByUsername(username);
         
         if(user == null) {
             throw new UsernameNotFoundException("User not found");
@@ -32,7 +32,7 @@ public class UserDetailsServiceImplementation implements UserDetailsService {
     }
     
     // 2
-    private List<GrantedAuthority> getAuthorities(User user){
+    private List<GrantedAuthority> getAuthorities(Login user){
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
         for(Role role : user.getRoles()) {
             GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(role.getName());

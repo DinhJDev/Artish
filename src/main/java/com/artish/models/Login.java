@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -19,7 +20,7 @@ import javax.persistence.Transient;
 
 @Entity
 @Table(name="users")
-public class User {
+public class Login {
  
  @Id
  @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -37,8 +38,11 @@ public class User {
      joinColumns = @JoinColumn(name = "user_id"), 
      inverseJoinColumns = @JoinColumn(name = "role_id"))
  private List<Role> roles;
+ @OneToOne(fetch=FetchType.LAZY)
+ @JoinColumn(name="profile_id")
+ private Profile profile;
  
- public User() {
+ public Login() {
  }
  public Long getId() {
      return id;

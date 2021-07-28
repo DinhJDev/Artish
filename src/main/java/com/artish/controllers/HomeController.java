@@ -14,20 +14,20 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.artish.models.User;
-import com.artish.services.UserService;
+import com.artish.models.Login;
+import com.artish.services.LoginService;
 
 @Controller
 public class HomeController {
 	@Autowired
-	UserService userService;
+	LoginService userService;
 	
 	@GetMapping("/registration")
-    public String registerForm(@Valid @ModelAttribute("user") User user) {
+    public String registerForm(@Valid @ModelAttribute("user") Login user) {
         return "registrationPage.jsp";
     }
 	@PostMapping("/registration")
-    public String registration(@Valid @ModelAttribute("user") User user, BindingResult result, Model model, HttpSession session) {
+    public String registration(@Valid @ModelAttribute("user") Login user, BindingResult result, Model model, HttpSession session) {
         if (result.hasErrors()) {
             return "registrationPage.jsp";
         }

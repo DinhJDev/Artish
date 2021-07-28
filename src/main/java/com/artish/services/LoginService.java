@@ -3,16 +3,16 @@ package com.artish.services;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.artish.models.User;
+import com.artish.models.Login;
 import com.artish.repositories.RoleRepository;
-import com.artish.repositories.UserRepository;
+import com.artish.repositories.LoginRepository;
 @Service
-public class UserService {
-    private UserRepository userRepository;
+public class LoginService {
+    private LoginRepository userRepository;
     private RoleRepository roleRepository;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     
-    public UserService(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder)     {
+    public LoginService(LoginRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder)     {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
@@ -20,21 +20,21 @@ public class UserService {
     
     
     // 1
-    public void saveWithUserRole(User user) {
+    public void saveWithUserRole(Login user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setRoles(roleRepository.findByName("ROLE_USER"));
         userRepository.save(user);
     }
      
      // 2 
-    public void saveUserWithAdminRole(User user) {
+    public void saveUserWithAdminRole(Login user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setRoles(roleRepository.findByName("ROLE_ADMIN"));
         userRepository.save(user);
     }    
     
     // 3
-    public User findByUsername(String username) {
+    public Login findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 }
