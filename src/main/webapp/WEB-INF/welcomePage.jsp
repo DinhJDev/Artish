@@ -43,7 +43,11 @@
 				<div class="modal-body">
 					<h3>Create your account</h3>
 					<p><form:errors path="user.*"/></p>
-					<form:form class="form" action="/registration" method="POST" modelAttribute="user">
+					<form:form class="form" action="/registration" method="POST" modelAttribute="login">
+					<div class="row mb-3">
+						<form:label path="profile.displayName" class="form-label">Display Name:</form:label>
+						<form:input path="profile.displayName" class="form-control"/>
+					</div>
 					<div class="row mb-3">
 						<form:label path="username" class="form-label">Username:</form:label>
 						<form:input path="username" class="form-control"/>

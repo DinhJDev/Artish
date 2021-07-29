@@ -3,6 +3,7 @@ package com.artish.models;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -38,7 +39,7 @@ public class Login {
      joinColumns = @JoinColumn(name = "login_id"), 
      inverseJoinColumns = @JoinColumn(name = "role_id"))
  private List<Role> roles;
- @OneToOne(fetch=FetchType.LAZY)
+ @OneToOne(cascade = CascadeType.ALL , orphanRemoval = true)
  @JoinColumn(name="profile_id")
  private Profile profile;
  
@@ -87,7 +88,13 @@ public class Login {
      this.roles = roles;
  }
  
- @PrePersist
+ public Profile getProfile() {
+	return profile;
+}
+public void setProfile(Profile profile) {
+	this.profile = profile;
+}
+@PrePersist
  protected void onCreate(){
      this.createdAt = new Date();
  }

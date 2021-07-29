@@ -28,6 +28,7 @@ public class Profile {
 	private Long id;
 	@Size(max=50)
 	private String displayName;
+	private String profilePicture;
 	@Size(max=30)
 	private String Location;
 	@Size(max=160)
@@ -174,4 +175,11 @@ public class Profile {
 	public void setFollowers(List<Profile> followers) {
 		this.followers = followers;
 	}
+	public String getProfilePicture() {
+		return profilePicture;
+	}
+	public void setProfilePicture(String profilePicture) {
+		this.profilePicture = profilePicture;
+	}
+	
 }
