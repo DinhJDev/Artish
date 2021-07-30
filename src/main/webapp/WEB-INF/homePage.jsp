@@ -19,7 +19,7 @@
 			integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
 			crossorigin="anonymous">
 		</script>
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css" integrity="sha384-wESLQ85D6gbsF459vf1CiZ2+rr+CsxRY0RpiF1tLlQpDnAgg6rwdsUF1+Ics2bni" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
 		<link href="/css/styles.css" rel="stylesheet">
 </head>
 <header>
@@ -96,6 +96,24 @@
 						   		</div>
 						   		<img class="postMedia mt-3" src="https://pbs.twimg.com/media/E6RVm4kX0AMvEDd?format=jpg&name=900x900">
 			   					<p class="mt-3"><c:out value = "${post.content}"/></p>
+			   					<div>
+			   						<c:out value="${post.comments.size()}"/>
+			   						<i class="far fa-comment-alt"></i>
+			   						<c:choose>
+									<c:when test="${post.likers.contains(currentUser.profile)}">
+										<a href="/unlike/+<c:out value='${post.id}'/>">
+											<c:out value="${post.likers.size()}"/>
+											<i class="fas fa-heart"></i>
+										</a>
+									</c:when>
+									<c:otherwise>
+										<a href="/like/+<c:out value='${post.id}'/>">
+											<c:out value="${post.likers.size()}"/>
+											<i class="far fa-heart"></i>
+										</a>
+									</c:otherwise>
+								</c:choose>
+			   					</div>
 			   				</div>
 			   			</div>
 			   		</c:forEach>

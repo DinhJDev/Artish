@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -70,5 +71,21 @@ public class HomeController {
     	post.setPoster(poster.getProfile());
     	postService.createPost(post);
     	return "redirect:/home";
+    }
+    @GetMapping("/like/{id}")
+    public String likeIdea(@PathVariable("id") Long id, Principal principal) {
+    	String username = principal.getName();
+        Login liker = loginService.findByUsername(username);
+        Post post = postService.getOnePost(id);
+        this.postService.addLiker(liker.getProfile(), post);
+        return "redirect:/home";
+    }
+    @GetMapping("/unlike/{id}")
+    public String unlikeIdea(@PathVariable("id") Long id, Principal principal) {
+    	String username = principal.getName();
+        Login liker = loginService.findByUsername(username);
+        Post post = postService.getOnePost(id);
+        this.postService.removeLiker(liker.getProfile(), post);
+        return "redirect:/home";
     }
 }
