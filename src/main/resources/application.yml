@@ -1,0 +1,23 @@
+cloud:
+  aws:
+    credentials:
+      access-key: AKIA2V4OG4ETH45LUGOS
+      secret-key: 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
+    region:
+      static: us-east-2
+    stack:
+      auto: false
+      
+application:
+  bucket:
+    name: artish-bucket
+    
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2MB
+      max-file-size: 5MB
+      max-request-size: 10MB
+server:
+  port: 8080

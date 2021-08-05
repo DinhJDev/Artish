@@ -77,6 +77,8 @@
 						   		<div class="col">
 							   		<form:form method="POST" action="/createPost" modelAttribute="post">
 										<form:input path="content" class="form-control" placeholder="Create post..."/>
+										<form:label path="file" name="file">Upload a file:</form:label>
+										<input type="file" name="file"/>
 										<div class="mt-1 d-md-flex justify-content-md-end">
 											<button class="btn btn-primary">Post</button>
 										</div>

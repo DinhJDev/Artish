@@ -16,7 +16,7 @@ public class PostService {
 	
 	// Display All
 	public List<Post> AllPosts(){
-		return this.pRepo.findAll();
+		return this.pRepo.findAllByOrderByIdDesc();
 	}
 	
 	// Create
