@@ -21,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j	
 public class StorageService {
-	@Value("${application.bucket.name")
+	@Value("${application.bucket.name}")
 	private String bucketName;
 	
 	@Autowired
@@ -32,7 +32,7 @@ public class StorageService {
 		String fileName=System.currentTimeMillis()+"_"+file.getOriginalFilename();
 		s3Client.putObject(new PutObjectRequest(bucketName, fileName, fileObj));
 		fileObj.delete();
-		return "File uploaded: " + fileName;
+		return fileName;
 	}
 	
 	public byte[] downloadFile(String fileName) {

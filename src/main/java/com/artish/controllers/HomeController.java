@@ -13,12 +13,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.artish.models.Login;
 import com.artish.models.Post;
 import com.artish.models.Profile;
 import com.artish.services.LoginService;
 import com.artish.services.PostService;
+import com.artish.services.StorageService;
 
 @Controller
 public class HomeController {
@@ -26,6 +28,8 @@ public class HomeController {
 	LoginService loginService;
 	@Autowired
 	PostService postService;
+	@Autowired
+	StorageService storageService;
 	
 	@GetMapping("/")
     public String registerForm(@Valid @ModelAttribute("login") Login login, @Valid @ModelAttribute("profile") Profile profile) {
@@ -65,10 +69,11 @@ public class HomeController {
         return "homePage.jsp";
     }
     @PostMapping("/createPost")
-    public String createPost(@Valid @ModelAttribute("post") Post post, BindingResult result, Model model, Principal principal) {
+    public String createPost(@Valid @ModelAttribute("post") Post post, BindingResult result, Model model, Principal principal, @RequestParam(value = "file") MultipartFile file) {
     	String username = principal.getName();
         Login poster = loginService.findByUsername(username);
     	post.setPoster(poster.getProfile());
+    	post.setMediaUrl("https://artish-bucket.s3.us-east-2.amazonaws.com/" + storageService.uploadFile(file));
     	postService.createPost(post);
     	return "redirect:/home";
     }

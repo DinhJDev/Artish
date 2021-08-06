@@ -75,10 +75,10 @@
 						   			<img class="icon" src=<c:out value="${currentUser.profile.profilePicture}"/>>
 						   		</div>
 						   		<div class="col">
-							   		<form:form method="POST" action="/createPost" modelAttribute="post">
+							   		<form:form method="POST" enctype="multipart/form-data" action="/createPost" modelAttribute="post">
 										<form:input path="content" class="form-control" placeholder="Create post..."/>
 										<form:label path="file" name="file">Upload a file:</form:label>
-										<input type="file" name="file"/>
+										<input type="file" name="file" accept=".jpg, .jpeg, .png, .gif"/>
 										<div class="mt-1 d-md-flex justify-content-md-end">
 											<button class="btn btn-primary">Post</button>
 										</div>
@@ -96,7 +96,7 @@
 							   		</div>
 							   		<div class="col"><strong><c:out value="${post.poster.displayName}"/></strong> @<c:out value="${post.poster.login.username}"/> - <fmt:formatDate pattern="MMM, dd" value="${post.createdAt}"/></div>
 						   		</div>
-						   		<img class="postMedia mt-3" src="https://pbs.twimg.com/media/E6RVm4kX0AMvEDd?format=jpg&name=900x900">
+						   		<img class="postMedia mt-3" src="${post.mediaUrl}">
 			   					<p class="mt-3"><c:out value = "${post.content}"/></p>
 			   					<div>
 			   						<c:out value="${post.comments.size()}"/>

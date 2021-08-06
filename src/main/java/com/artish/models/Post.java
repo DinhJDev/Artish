@@ -17,7 +17,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
+
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 @Table(name="posts")
@@ -27,6 +30,9 @@ public class Post {
 	private Long id;
 	@Size(max=2200)
 	private String content;
+	@Transient
+	private MultipartFile file;
+	private String mediaUrl;
 	@Column(updatable=false)
 	private Date createdAt;
 	private Date updatedAt;
@@ -120,4 +126,17 @@ public class Post {
 	public void setBookmarkers(List<Profile> bookmarkers) {
 		this.bookmarkers = bookmarkers;
 	}
+	public String getMediaUrl() {
+		return mediaUrl;
+	}
+	public void setMediaUrl(String mediaUrl) {
+		this.mediaUrl = mediaUrl;
+	}
+	public MultipartFile getFile() {
+		return file;
+	}
+	public void setFile(MultipartFile file) {
+		this.file = file;
+	}
+	
 }
