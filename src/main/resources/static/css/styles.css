@@ -1,9 +1,27 @@
 .welcomeMain {
 	display: flex;
 }
+.image-wrapper {
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin-top: 44vh;
+	margin-right:6vw;
+	width: 80vw;
+}
+
+.welcome-subtitles {
+	position: relative;
+	right: 4vw;
+}
+.welcome-subtitles h3{
+	margin-top: 2vh;
+}
 
 .main-image {
-	width: 100vw;
+	width: 180vw;
 	height: 97vh;
 	margin-right: auto;
 	object-fit: none;
@@ -17,12 +35,13 @@
 .info {
 	display: flex;
 	flex-direction: column;
+	align-items: center;
 	justify-content: center;
-	margin: 45vh 100px 0 5vw;
+	margin: 40vh 100px 0 5vw;
 }
 
-.info button {
-	margin: 10px 17vw 10px 0vw;
+.welcome-buttons {
+	width: 15vw;
 }
 
 footer .nav-link {

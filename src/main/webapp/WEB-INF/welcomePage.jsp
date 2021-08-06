@@ -21,53 +21,53 @@
 </head>
 <body>
 <div class="welcomeMain">
+	<div class="image-wrapper text-white">
+		<h1>Platform for artists created by artists</h1>
+			<div class="welcome-subtitles">
+				<h3>Find inspiration.</h3>
+				<h3>See what artists have to share.</h3>
+				<h3>Share your artwork.</h3>
+			</div>
+
+	</div>
 	<img src="http://localhost:8080/images/hero.jpg" alt="curated-art" class="main-image">
 	<section class="info-wrapper bg-dark text-white">
 		<div class="info">
 			<h1>Artish.</h1>
 			<!--<img src="" alt="logo" class="logo">-->
-			<h1>For artists created by artists</h1>
 			<h2>Join Artish today.</h2>
-			<button class="btn btn-primary" type="button" id="signUpButton" data-bs-toggle="modal" data-bs-target="#signUpModal">Sign up</button>
-			<button class="btn btn-secondary" onclick="location.href='/login'" type="button">Log in</button>
-		</div>
-	</section>
-</div>
-<div class="modal" id="signUpModal" tabindex="-1">
-		<div class="modal-dialog modal-dialog-centered">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h1>Artish.</h1>
-					<!--<img src="" alt="logo" class="logo">-->
-				</div>
-				<div class="modal-body">
-					<h3>Create your account</h3>
 					<p><form:errors path="user.*"/></p>
 					<form:form class="form" action="/registration" method="POST" modelAttribute="login">
 					<div class="row mb-3">
-						<form:label path="profile.displayName" class="form-label">Display Name:</form:label>
-						<form:input path="profile.displayName" class="form-control"/>
+						<div class="col">
+							<form:input path="profile.displayName" placeholder="Display Name" class="form-control form-control-lg"/>
+						</div>
 					</div>
 					<div class="row mb-3">
-						<form:label path="username" class="form-label">Username:</form:label>
-						<form:input path="username" class="form-control"/>
+						<div class="col">
+							<div class="input-group">
+								<span class="input-group-text" id="inputGroupPrepend">@</span>
+								<form:input path="username" placeholder="Username" class="form-control form-control-lg"/>
+							</div>
+						</div>
 					</div>
 					<div class="row mb-3">
-						<form:label path="password" class="form-label">Password:</form:label>
-						<form:password path="password" class="form-control"/>
+						<div class="col">
+							<form:password path="password" placeholder="Password" class="form-control form-control-lg"/>
+						</div>
 					</div>
 					<div class="row mb-3">
-						<form:label path="passwordConfirmation" class="form-label">Password Confirmation:</form:label>
-						<form:password path="passwordConfirmation" class="form-control"/>
+						<div class="col">
+							<form:password path="passwordConfirmation" placeholder="Confirm Password" class="form-control form-control-lg"/>
+						</div>
 					</div>
-					<button class="btn btn-primary">Sign Up</button>
+					<button class="btn btn-primary welcome-buttons">Register</button>
 					</form:form>
-				</div>
-				<div class="modal-footer">
-				</div>
-			</div>
+			<p class="mt-3">Already have an account?</p>
+			<button class="btn btn-secondary welcome-buttons" onclick="location.href='/login'" type="button">Log in</button>
 		</div>
-	</div>
+	</section>
+</div>
 </body>
 <footer class="bg-dark text-white">
 		<ul class="nav justify-content-center">
