@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.artish.models.Comment;
 import com.artish.models.Login;
 import com.artish.models.Post;
 import com.artish.models.Profile;
+import com.artish.services.CommentService;
 import com.artish.services.LoginService;
 import com.artish.services.PostService;
 import com.artish.services.StorageService;
@@ -30,6 +32,8 @@ public class HomeController {
 	PostService postService;
 	@Autowired
 	StorageService storageService;
+	@Autowired
+	CommentService commentService;
 	
 	@GetMapping("/")
     public String registerForm(@Valid @ModelAttribute("login") Login login, @Valid @ModelAttribute("profile") Profile profile) {
@@ -62,7 +66,7 @@ public class HomeController {
         return "loginPage.jsp";
     }
     @GetMapping(value = {"/home"})
-    public String home(Principal principal, Model model, @Valid @ModelAttribute("post") Post post) {
+    public String home(Principal principal, Model model, @Valid @ModelAttribute("post") Post post, @Valid @ModelAttribute("comment") Comment comment) {
         String username = principal.getName();
         model.addAttribute("currentUser", loginService.findByUsername(username));
         model.addAttribute("recentPosts", postService.AllPosts());
@@ -77,6 +81,17 @@ public class HomeController {
     	postService.createPost(post);
     	return "redirect:/home";
     }
+    @PostMapping("/createComment/{postId}")
+    public String createComment(@Valid @ModelAttribute("comment") Comment comment, BindingResult result, Model model, Principal principal, @PathVariable("postId") Long postId) {
+    	String username = principal.getName();
+        Login poster = loginService.findByUsername(username);
+        Post post = postService.getOnePost(postId);
+        comment.setPost(post);
+        comment.setCommenter(poster.getProfile());
+        commentService.createComment(comment);
+        return "redirect:/home";
+    }
+    
     @GetMapping("/like/{id}")
     public String likeIdea(@PathVariable("id") Long id, Principal principal) {
     	String username = principal.getName();

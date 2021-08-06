@@ -97,25 +97,40 @@
 							   		<div class="col"><strong><c:out value="${post.poster.displayName}"/></strong> @<c:out value="${post.poster.login.username}"/> - <fmt:formatDate pattern="MMM, dd" value="${post.createdAt}"/></div>
 						   		</div>
 						   		<img class="postMedia mt-3" src="${post.mediaUrl}">
-			   					<p class="mt-3"><c:out value = "${post.content}"/></p>
 			   					<div>
-			   						<c:out value="${post.comments.size()}"/>
-			   						<i class="far fa-comment-alt"></i>
 			   						<c:choose>
-									<c:when test="${post.likers.contains(currentUser.profile)}">
-										<a href="/unlike/+<c:out value='${post.id}'/>">
-											<c:out value="${post.likers.size()}"/>
-											<i class="fas fa-heart"></i>
-										</a>
-									</c:when>
-									<c:otherwise>
-										<a href="/like/+<c:out value='${post.id}'/>">
-											<c:out value="${post.likers.size()}"/>
-											<i class="far fa-heart"></i>
-										</a>
-									</c:otherwise>
-								</c:choose>
+										<c:when test="${post.likers.contains(currentUser.profile)}">
+											<a href="/unlike/+<c:out value='${post.id}'/>">
+												<i class="fas fa-heart"></i>
+											</a>
+										</c:when>
+										<c:otherwise>
+											<a href="/like/+<c:out value='${post.id}'/>">
+												<i class="far fa-heart"></i>
+											</a>
+										</c:otherwise>
+									</c:choose>
+			   						<i class="far fa-comment-alt"></i>
 			   					</div>
+			   					<p><strong><c:out value="${post.likers.size()}"/> likes</strong></p>
+			   					<p><strong><c:out value="${post.poster.login.username}"/></strong> <c:out value = "${post.content}"/></p>
+			   					<c:choose>
+			   						<c:when test="${post.comments.size()>2}">
+				   						<p>View all <c:out value="${post.comments.size()}"/> comments</p>
+				   						<c:forEach begin="${post.comments.size()-2}" end="${post.comments.size()}" var="i">
+				   							<p><strong><c:out value="${post.comments[i].commenter.login.username}"/></strong> <c:out value="${post.comments[i].content}"/></p>
+				   						</c:forEach>
+				   					</c:when>
+				   					<c:otherwise>
+				   						<c:forEach items="${post.comments}" var="comments">
+				   							<p><strong><c:out value="${comments.commenter.login.username}"/></strong> <c:out value="${comments.content}"/></p>
+				   						</c:forEach>
+				   					</c:otherwise>
+				   				</c:choose>
+				   				<form:form method="POST" action="/createComment/${post.id}" modelAttribute="comment">
+				   					<form:input path="content" class="form-control" placeholder="Add a comment..."/>
+				   					<button class="btn btn-secondary">Post</button>
+				   				</form:form>
 			   				</div>
 			   			</div>
 			   		</c:forEach>

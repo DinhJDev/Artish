@@ -79,4 +79,5 @@ public class Comment {
 	public void setCommenter(Profile commenter) {
 		this.commenter = commenter;
 	}
+	
 }
