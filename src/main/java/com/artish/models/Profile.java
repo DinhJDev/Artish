@@ -18,7 +18,10 @@ import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
+
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 @Table(name="profiles")
@@ -28,6 +31,8 @@ public class Profile {
 	private Long id;
 	@Size(max=50)
 	private String displayName;
+	@Transient
+	private MultipartFile file;
 	private String profilePicture;
 	@Size(max=30)
 	private String location;

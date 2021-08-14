@@ -7,7 +7,7 @@
 <html>
 <head>
 	<meta charset="ISO-8859-1">
-	<title><c:out value="${userProfile.displayName}"/> (@<c:out value="${userProfile.login.username}"/>)</title>
+	<title><c:out value="${profile.displayName}"/> (@<c:out value="${profile.login.username}"/>)</title>
 	<link
 		href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
 		rel="stylesheet"
@@ -18,7 +18,9 @@
 		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
 		crossorigin="anonymous">
 	</script>
-	<link href="http://localhost:8080/css/styles.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
+	<link href="/css/styles.css" rel="stylesheet">
+	<script src="/js/imgPreview.js"></script>
 </head>
 <header>
 	<nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
@@ -49,6 +51,9 @@
 				<img class="icon" src=<c:out value="${currentUser.profile.profilePicture}"/>>
 				</a>
 				<ul class="dropdown-menu">
+					<li class="dropdown-item">
+						<a href="/u/<c:out value="${currentUser.username}"/>">Profile</a>
+					</li>
 					<li>
 					<form id="logoutForm" method="POST" action="/logout">
 					        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -76,25 +81,34 @@
 		   				<div class="card-body">
 		   					<!-- Banner -->
 		   					<div class="row">
-		   						<img class="icon" src=<c:out value="${userProfile.profilePicture}"/>>
+		   						<img class="icon" src=<c:out value="${profile.profilePicture}"/>>
 		   					</div>
 		   					<div class="row displayName">
-				   				<c:out value="${userProfile.displayName}"/>
+				   				<p><c:out value="${profile.displayName}"/></p>
 				   			</div>
 				   			<div class="row username">
-				   				@<c:out value="${userProfile.login.username}"/>
+				   				<p>@<c:out value="${profile.login.username}"/></p>
 				   			</div>
-				   			<c:out value="${userProfile.about}"/>
-				   			<c:out value="${userProfile.location}"/>
+				   			<div class="row about">
+				   				<p><c:out value="${profile.about}"/></p>
+				   			</div>
+				   			<div class="row location">
+				   				<p><i class="fas fa-map-marker-alt"></i> <c:out value="${profile.location}"/></p>
+				   			</div>
+				   			<button class="btn btn-outline-secondary" type="button" id="editProfileButton" data-bs-toggle="modal" data-bs-target="#editModal">Edit profile</button>
+				   			<hr>
 				   			<div class="row">
-				   				<div class="col">
-				   					<c:out value="${userProfile.posts.size()}"/>
+				   				<div class="col border-line">
+				   					<h2><c:out value="${profile.posts.size()}"/></h2>
+				   					<p>Post</p>
+				   				</div>
+				   				<div class="col border-line">
+				   					<h2><c:out value="${profile.followers.size()}"/></h2>
+				   					<p>Followers</p>
 				   				</div>
 				   				<div class="col">
-				   					<c:out value="${userProfile.followers.size()}"/>
-				   				</div>
-				   				<div class="col">
-				   					<c:out value="${userProfile.following.size()}"/>
+				   					<h2><c:out value="${profile.following.size()}"/></h2>
+				   					<p>Following</p>
 				   				</div>
 				   			</div>
 		   				</div>
@@ -153,5 +167,40 @@
 		   	</div>
 		</div>
 	</main>
+	<div class="modal" id="editModal" tabindex="-1">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<p>Edit profile</p>
+				</div>
+				<div class="modal-body">
+					<p><form:errors path="user.*"/></p>
+					<form:form class="form" action="/editProfile/${username}" method="POST" enctype="multipart/form-data" modelAttribute="profile">
+						<label class="row icon-upload" id="choose-file">
+							<i class="far fa-plus-square"></i>
+							<img class="icon" id="img-preview" src=<c:out value="${currentUser.profile.profilePicture}"/>>
+							<input type="file" name="file" accept=".jpg, .jpeg, .png, .gif" class="form-control" hidden/>
+						</label>
+						<div class="form-floating mb-3">
+							<form:input path="displayName" class="form-control"/>
+							<form:label path="displayName" class="floatingInput">Display Name</form:label>
+						</div>
+						<div class="form-floating mb-3">
+							<form:input path="about" class="form-control"/>
+							<form:label path="about" class="floatingInput">Bio</form:label>
+						</div>
+						<div class="form-floating mb-3">
+							<form:input path="location" class="form-control"/>
+							<form:label path="location" class="floatingInput">Location</form:label>
+						</div>
+						
+						<button class="btn btn-primary">Save</button>
+					</form:form>
+				</div>
+				<div class="modal-footer">
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

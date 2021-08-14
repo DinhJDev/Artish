@@ -73,6 +73,7 @@ public class HomeController {
         String username = principal.getName();
         model.addAttribute("currentUser", loginService.findByUsername(username));
         model.addAttribute("recentPosts", postService.AllPosts());
+        model.addAttribute("newestUsers", profileService.getAllProfiles(0,3,"id"));
         return "homePage.jsp";
     }
     @PostMapping("/createPost")
@@ -112,12 +113,29 @@ public class HomeController {
         return "redirect:/home";
     }
     @GetMapping("/u/{username}")
-    public String userPage(@PathVariable("username") String username, Principal principal, Model model, @Valid @ModelAttribute("comment") Comment comment, @Valid @ModelAttribute("profile") Profile profile) {
+    public String userPage(@PathVariable("username") String username, Principal principal, Model model, @Valid @ModelAttribute("comment") Comment comment) {
     	String login = principal.getName();
-    	Profile pProfile = profileService.getOneProfile(loginService.findByUsername(username));
+    	Profile p = profileService.getOneProfile(loginService.findByUsername(username));
     	model.addAttribute("currentUser", loginService.findByUsername(login));
-    	model.addAttribute("userProfile", pProfile);
+    	model.addAttribute("profile", p);
     	model.addAttribute("userPosts", postService.getPostsByPoster(username));
     	return "profilePage.jsp";
+    }
+    @PostMapping("editProfile/{username}")
+    public String updateProfile(@PathVariable("username") String username, Principal principal, Model model, @Valid @ModelAttribute("comment") Comment comment, 
+    		@Valid @ModelAttribute("profile") Profile profile, BindingResult result,  @RequestParam(value = "file") MultipartFile file) {
+    	String login = principal.getName();
+    	model.addAttribute("currentUser", loginService.findByUsername(login));
+    	Profile p = profileService.getOneProfile(loginService.findByUsername(username));
+    	if(result.hasErrors()) {
+        	model.addAttribute("profile", p);
+        	model.addAttribute("userPosts", postService.getPostsByPoster(username));
+        	return "profilePage.jsp";
+    	} else {
+    		profile.setId(p.getId());
+    		profile.setProfilePicture("https://artish-bucket.s3.us-east-2.amazonaws.com/" + storageService.uploadFile(file));
+    		profileService.updateProfile(profile);
+    		return "redirect:/u/" + username;
+    	}
     }
 }

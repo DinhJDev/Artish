@@ -19,6 +19,7 @@
 			integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
 			crossorigin="anonymous">
 		</script>
+		<script src="https://code.jquery.com/jquery-3.6.0.slim.js" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
 		<link href="/css/styles.css" rel="stylesheet">
 </head>
@@ -51,6 +52,9 @@
 				<img class="icon" src=<c:out value="${currentUser.profile.profilePicture}"/>>
 				</a>
 				<ul class="dropdown-menu">
+					<li class="dropdown-item">
+						<a href="/u/<c:out value="${currentUser.username}"/>">Profile</a>
+					</li>
 					<li>
 					<form id="logoutForm" method="POST" action="/logout">
 					        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -98,13 +102,20 @@
 				   		</div>
 			   		</div>
 			   		<c:forEach items="${recentPosts}" var="post">
-			   			<div class="card mt-3">
+			   			<div class="card mt-3 post">
 			   				<div class="card-body">
 				   				<div class="row">
 				   					<div class="col-1">
-							   			<img class="icon" src=<c:out value="${post.poster.profilePicture}"/>>
+							   			<a href="/u/<c:out value='${post.poster.login.username}'/>"><img class="icon" src=<c:out value="${post.poster.profilePicture}"/>></a>
 							   		</div>
-							   		<div class="col"><strong><c:out value="${post.poster.displayName}"/></strong> @<c:out value="${post.poster.login.username}"/> - <fmt:formatDate pattern="MMM, dd" value="${post.createdAt}"/></div>
+							   		<div class="col">
+							   			<div class="post-header">
+							   				<p><a href="/u/<c:out value='${post.poster.login.username}'/>"><strong><c:out value="${post.poster.displayName}"/></strong> @<c:out value="${post.poster.login.username}"/></a> - <fmt:formatDate pattern="MMM, dd" value="${post.createdAt}"/></p>
+							   			</div>
+						   				<div>
+						   					<p><c:out value = "${post.content}"/></p>
+						   				</div>
+						   			</div>
 						   		</div>
 						   		<img class="postMedia mt-3" src="${post.mediaUrl}">
 			   					<div>
@@ -123,7 +134,6 @@
 			   						<i class="far fa-comment-alt"></i>
 			   					</div>
 			   					<p><strong><c:out value="${post.likers.size()}"/> likes</strong></p>
-			   					<p><strong><c:out value="${post.poster.login.username}"/></strong> <c:out value = "${post.content}"/></p>
 			   					<c:choose>
 			   						<c:when test="${post.comments.size()>2}">
 				   						<p>View all <c:out value="${post.comments.size()}"/> comments</p>
@@ -147,8 +157,22 @@
 		   		</div>
 		   		<div class="col">
 		   			<div class="card">
+		   				<div class="card-header">
+		   					New Artists
+		   				</div>
 		   				<div class="card-body">
-		   					
+		   					<c:forEach items="${newestUsers}" var="user">
+		   						<div class="row">
+		   							<div class="col">
+							   			<a href="/u/<c:out value='${user.login.username}'/>"><img class="icon" src=<c:out value="${user.profilePicture}"/>></a>
+							   		</div>
+							   		<div class="col">
+							   			<div class="post-header">
+							   				<p><a href="/u/<c:out value='${user.login.username}'/>"><strong><c:out value="${user.displayName}"/></strong> @<c:out value="${userr.login.username}"/></a></p>
+							   			</div>
+							   		</div>
+		   						</div>
+		   					</c:forEach>
 		   				</div>
 		   			</div>
 		   		</div>
