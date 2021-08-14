@@ -22,6 +22,7 @@ import com.artish.models.Profile;
 import com.artish.services.CommentService;
 import com.artish.services.LoginService;
 import com.artish.services.PostService;
+import com.artish.services.ProfileService;
 import com.artish.services.StorageService;
 
 @Controller
@@ -34,6 +35,8 @@ public class HomeController {
 	StorageService storageService;
 	@Autowired
 	CommentService commentService;
+	@Autowired
+	ProfileService profileService;
 	
 	@GetMapping("/")
     public String registerForm(@Valid @ModelAttribute("login") Login login, @Valid @ModelAttribute("profile") Profile profile) {
@@ -107,5 +110,14 @@ public class HomeController {
         Post post = postService.getOnePost(id);
         this.postService.removeLiker(liker.getProfile(), post);
         return "redirect:/home";
+    }
+    @GetMapping("/u/{username}")
+    public String userPage(@PathVariable("username") String username, Principal principal, Model model, @Valid @ModelAttribute("comment") Comment comment, @Valid @ModelAttribute("profile") Profile profile) {
+    	String login = principal.getName();
+    	Profile pProfile = profileService.getOneProfile(loginService.findByUsername(username));
+    	model.addAttribute("currentUser", loginService.findByUsername(login));
+    	model.addAttribute("userProfile", pProfile);
+    	model.addAttribute("userPosts", postService.getPostsByPoster(username));
+    	return "profilePage.jsp";
     }
 }

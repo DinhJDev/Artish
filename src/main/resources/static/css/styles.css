@@ -71,3 +71,28 @@ main {
 	width: fill;
 	height: auto;
 }
+
+a {
+	text-decoration: none;
+	color: black;
+}
+a:hover {
+	text-decoration: underline;
+	color: black;
+}
+
+.profile .icon {
+	height: 133.5px;
+	width: 133.5px;
+	padding: 0px;
+}
+
+.profile .displayName {
+	font-weight: bold;
+	font-size: 20px;
+}
+
+.profile .username {
+	font-size: 15px;
+	color: rgb(110, 118, 125);
+}

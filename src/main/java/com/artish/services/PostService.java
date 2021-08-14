@@ -24,9 +24,13 @@ public class PostService {
 		return this.pRepo.save(post);
 	}
 	
-	
+	// Read
 	public Post getOnePost(Long id) {
 		return this.pRepo.findById(id).orElse(null);
+	}
+	// Find by Poster
+	public List<Post> getPostsByPoster(String username) {
+		return this.pRepo.findByPosterLoginUsernameOrderByIdDesc(username);
 	}
 	
 	public Post updatePost(Post post) {

@@ -30,9 +30,9 @@ public class Profile {
 	private String displayName;
 	private String profilePicture;
 	@Size(max=30)
-	private String Location;
+	private String location;
 	@Size(max=160)
-	private String About;
+	private String about;
 	@Column(updatable=false)
 	private Date created_at;
 	private Date updated_at;
@@ -103,17 +103,18 @@ public class Profile {
 	public void setDisplayName(String displayName) {
 		this.displayName = displayName;
 	}
+	
 	public String getLocation() {
-		return Location;
+		return location;
 	}
 	public void setLocation(String location) {
-		Location = location;
+		this.location = location;
 	}
 	public String getAbout() {
-		return About;
+		return about;
 	}
 	public void setAbout(String about) {
-		About = about;
+		this.about = about;
 	}
 	public Date getCreated_at() {
 		return created_at;

@@ -12,5 +12,5 @@ public interface PostRepository extends JpaRepository<Post, Long>  {
 	// Newest First
 	List<Post> findAllByOrderByIdDesc();
 		
-	List<Post> findByPoster(String poster);
+	List<Post> findByPosterLoginUsernameOrderByIdDesc(String username);
 }
