@@ -54,7 +54,7 @@ footer {
 }
 
 .icon {
-	border-radius: 100%;
+	border-radius: 10px;
 	height: 48px;
 	width: 48px;
 	margin-left: auto;
@@ -64,6 +64,8 @@ footer {
 
 main {
 	padding-top: 80px;
+	background-color: #212529;
+	font-family: 'Montserrat', sans-serif;
 }
 
 .postMedia {
@@ -151,6 +153,7 @@ main {
 
 .card {
 	background-color: #3D3D3D;
+	border-radius: 25px;
 }
 
 .card p,h1,h2,h3,h4 {
@@ -165,4 +168,61 @@ main {
 .card a:hover {
 	text-decoration: underline;
 	color: #FFF;
+}
+
+.card-header p {
+	font-weight: 700;
+	font-size: 18px;
+	margin-bottom: 0px; 
+	margin-top: 5px;
+}
+.new-artists .display-name {
+	font-size: 16px;
+	font-weight: 600;
+	margin: 0;
+}
+.new-artists .username {
+	font-size: 12px;
+	font-weight: 500;
+	margin: 0;
+}
+.new-artists .icon-col {
+	max-width: 48px;
+	padding: 0;
+	margin: 0 5px;
+}
+
+.new-artists .row {
+	margin-bottom: 15px;
+}
+
+.circle {
+	position: relative;
+	border-radius: 100%;
+	background-color: #007BFF;
+	width: 35px;
+	height: 35px;
+	color: #fff;
+	margin: 6.5px 0;
+	border: none;
+	padding: 1px 6px;
+}
+
+.circle:hover {
+	
+}
+
+.follow-col {
+	padding: 0;
+	width:35px;
+	max-width:35px;
+	margin: 0 10px;
+}
+
+.see-more {
+	margin: 5px;
+}
+
+.see-more a, a:hover {
+	color: #007BFF !important;
 }

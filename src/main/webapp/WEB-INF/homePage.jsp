@@ -22,6 +22,7 @@
 		<script src="https://code.jquery.com/jquery-3.6.0.slim.js" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
 		<link href="/css/styles.css" rel="stylesheet">
+		<style>@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&display=swap');</style>
 </head>
 <header>
 	<nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
@@ -67,7 +68,7 @@
 	</nav>
 </header>
 <body>
-	<main class="bg-dark">
+	<main>
 	   	<div class="container">
 	   		<div class="row">
 		   		<div class="col">
@@ -156,23 +157,43 @@
 			   		</c:forEach>
 		   		</div>
 		   		<div class="col">
-		   			<div class="card">
+		   			<div class="card new-artists">
 		   				<div class="card-header">
-		   					New Artists
+		   					<p>NEW ARTISTS</p>
 		   				</div>
 		   				<div class="card-body">
 		   					<c:forEach items="${newestUsers}" var="user">
 		   						<div class="row">
-		   							<div class="col">
+		   							<div class="col icon-col">
 							   			<a href="/u/<c:out value='${user.login.username}'/>"><img class="icon" src=<c:out value="${user.profilePicture}"/>></a>
 							   		</div>
 							   		<div class="col">
-							   			<div class="post-header">
-							   				<p><a href="/u/<c:out value='${user.login.username}'/>"><strong><c:out value="${user.displayName}"/></strong> @<c:out value="${userr.login.username}"/></a></p>
-							   			</div>
+						   				<p class="display-name"><c:out value="${user.displayName}"/></p>
+						   				<p class="username">@<c:out value="${user.login.username}"/></p>
+							   		</div>
+							   		<div class="col follow-col">
+							  		<c:choose>
+										<c:when test="${user.followers.contains(currentUser.profile)}">
+											<form method="get" action="/unfollow/+<c:out value='${user.id}'/>">
+												<button class="circle">
+										   			<i class="fas fa-check"></i>
+												</button>
+											</form>
+										</c:when>
+										<c:otherwise>
+											<form method="get" action="/unfollow/+<c:out value='${user.id}'/>">
+												<button class="circle">
+													<i class="fas fa-plus"></i>
+												</button>
+											</form>
+										</c:otherwise>
+									</c:choose>
 							   		</div>
 		   						</div>
 		   					</c:forEach>
+		   				</div>
+		   				<div class="card-footer">
+		   					<p class="see-more"><a href="">See more...</a></p>
 		   				</div>
 		   			</div>
 		   		</div>

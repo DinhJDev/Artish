@@ -178,7 +178,7 @@
 					<form:form class="form" action="/editProfile/${username}" method="POST" enctype="multipart/form-data" modelAttribute="profile">
 						<label class="row icon-upload" id="choose-file">
 							<i class="far fa-plus-square"></i>
-							<img class="icon" id="img-preview" src=<c:out value="${currentUser.profile.profilePicture}"/>>
+							<img class="icon" id="img-preview" src=<c:out value="${profile.profilePicture}"/>>
 							<input type="file" name="file" accept=".jpg, .jpeg, .png, .gif" class="form-control" hidden/>
 						</label>
 						<div class="form-floating mb-3">
