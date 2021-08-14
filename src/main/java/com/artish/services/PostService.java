@@ -57,6 +57,9 @@ public class PostService {
 	public List<Post> getPostsByPoster(String username) {
 		return this.pRepo.findByPosterLoginUsernameOrderByIdDesc(username);
 	}
+	public List<Post> getArtworkByPoster(String username) {
+		return this.pRepo.findByPosterLoginUsernameAndMediaUrlStartingWith(username, "https://artish-bucket.s3.us-east-2.amazonaws.com/");
+	}
 	
 	public Post updatePost(Post post) {
 		return this.pRepo.save(post);
@@ -76,6 +79,9 @@ public class PostService {
 		List<Profile> currentLikers = post.getLikers();
 		currentLikers.remove(profile);
 		this.pRepo.save(post);
+	}
+	public List<Post> getPostsByLiker(String username) {
+		return this.pRepo.findByLikersLoginUsername(username);
 	}
 	
 	// Add & Remove Bookmarkers

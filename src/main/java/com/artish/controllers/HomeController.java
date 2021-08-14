@@ -177,8 +177,32 @@ public class HomeController {
     	model.addAttribute("currentUser", loginService.findByUsername(login));
     	model.addAttribute("profile", p);
     	model.addAttribute("userPosts", postService.getPostsByPoster(username));
+    	model.addAttribute("newestUsers", profileService.getAllProfiles(0,3,"id"));
     	return "profilePage.jsp";
     }
+    @GetMapping("/u/{username}/artwork")
+    public String userArtworkPage(@PathVariable("username") String username, Principal principal, Model model, 
+    		@Valid @ModelAttribute("comment") Comment comment) {
+    	String login = principal.getName();
+    	Profile p = profileService.getOneProfile(loginService.findByUsername(username));
+    	model.addAttribute("currentUser", loginService.findByUsername(login));
+    	model.addAttribute("profile", p);
+    	model.addAttribute("userPosts", postService.getArtworkByPoster(username));
+    	model.addAttribute("newestUsers", profileService.getAllProfiles(0,3,"id"));
+    	return "profileArtworkPage.jsp";
+    }
+    @GetMapping("/u/{username}/likes")
+    public String userLikesPage(@PathVariable("username") String username, Principal principal, Model model, 
+    		@Valid @ModelAttribute("comment") Comment comment) {
+    	String login = principal.getName();
+    	Profile p = profileService.getOneProfile(loginService.findByUsername(username));
+    	model.addAttribute("currentUser", loginService.findByUsername(login));
+    	model.addAttribute("profile", p);
+    	model.addAttribute("userPosts", postService.getPostsByLiker(username));
+    	model.addAttribute("newestUsers", profileService.getAllProfiles(0,3,"id"));
+    	return "profileLikesPage.jsp";
+    }
+    
     @PostMapping("editProfile/{username}")
     public String updateProfile(@PathVariable("username") String username, Principal principal, Model model, @Valid @ModelAttribute("comment") Comment comment, 
     		@Valid @ModelAttribute("profile") Profile profile, BindingResult result,  @RequestParam(value = "file") MultipartFile file) {
@@ -191,7 +215,14 @@ public class HomeController {
         	return "profilePage.jsp";
     	} else {
     		profile.setId(p.getId());
-    		profile.setProfilePicture("https://artish-bucket.s3.us-east-2.amazonaws.com/" + storageService.uploadFile(file));
+    		profile.setPostsBookmarked(p.getPostsBookmarked());
+    		profile.setFollowing(p.getFollowing());
+    		profile.setPostsLiked(p.getPostsLiked());
+    		if (file.isEmpty()) {
+    			profile.setProfilePicture(p.getProfilePicture());
+    		} else {
+    			profile.setProfilePicture("https://artish-bucket.s3.us-east-2.amazonaws.com/" + storageService.uploadFile(file));
+    		}
     		profileService.updateProfile(profile);
     		return "redirect:/u/" + username;
     	}

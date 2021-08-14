@@ -130,9 +130,9 @@
 		   				</div>
 		   				<div class="card-footer">
 		   					<div class="row profile-pages">
-				   				<div class="col"><p><a class="nav-link active" href="/u/${profile.login.username}">Posts</a></p></div>
+				   				<div class="col"><p><a class="nav-link" href="/u/${profile.login.username}">Posts</a></p></div>
 				   				<div class="col"><p><a class="nav-link" href="/u/${profile.login.username}/artwork">Artwork</a></p></div>
-				   				<div class="col"><p><a class="nav-link" href="/u/${profile.login.username}/likes">Likes</a></p></div>
+				   				<div class="col"><p><a class="nav-link active" href="/u/${profile.login.username}/likes">Likes</a></p></div>
 				   			</div>
 		   				</div>
 		   			</div>

@@ -16,8 +16,10 @@ public interface PostRepository extends JpaRepository<Post, Long>  {
 		
 	List<Post> findByPosterLoginUsernameOrderByIdDesc(String username);
 	List<Post> findByBookmarkersLoginUsername(String username);
+	List<Post> findByLikersLoginUsername(String username);
 	List<Post> findByPosterFollowersLoginUsername(String username);
 	Page<Post> findAll(Pageable pageable); 
 	
+	List<Post>findByPosterLoginUsernameAndMediaUrlStartingWith(String username, String url);
     List<Post> findByContentIgnoreCaseContainingOrPosterLoginUsernameIgnoreCaseContainingOrPosterDisplayNameIgnoreCaseContaining(String content, String username, String displayName);
 }
