@@ -68,11 +68,27 @@ public class HomeController {
         }
         return "loginPage.jsp";
     }
-    @GetMapping(value = {"/home"})
+    @GetMapping(value = {"/home/following"})
     public String home(Principal principal, Model model, @Valid @ModelAttribute("post") Post post, @Valid @ModelAttribute("comment") Comment comment) {
         String username = principal.getName();
         model.addAttribute("currentUser", loginService.findByUsername(username));
-        model.addAttribute("recentPosts", postService.AllPosts());
+        model.addAttribute("recentPosts", postService.getFollowingPosts(username));
+        model.addAttribute("newestUsers", profileService.getAllProfiles(0,3,"id"));
+        return "homePage.jsp";
+    }
+    @GetMapping(value = {"/home/popular", "/home"})
+    public String popular(Principal principal, Model model, @Valid @ModelAttribute("post") Post post, @Valid @ModelAttribute("comment") Comment comment) {
+        String username = principal.getName();
+        model.addAttribute("currentUser", loginService.findByUsername(username));
+        model.addAttribute("recentPosts", postService.getAllPostsDesc(0,10,"likers"));
+        model.addAttribute("newestUsers", profileService.getAllProfiles(0,3,"id"));
+        return "homePage.jsp";
+    }
+    @GetMapping(value = {"/home/latest"})
+    public String latest(Principal principal, Model model, @Valid @ModelAttribute("post") Post post, @Valid @ModelAttribute("comment") Comment comment) {
+        String username = principal.getName();
+        model.addAttribute("currentUser", loginService.findByUsername(username));
+        model.addAttribute("recentPosts", postService.getAllPostsDesc(0,10,"createdAt"));
         model.addAttribute("newestUsers", profileService.getAllProfiles(0,3,"id"));
         return "homePage.jsp";
     }
@@ -81,7 +97,11 @@ public class HomeController {
     	String username = principal.getName();
         Login poster = loginService.findByUsername(username);
     	post.setPoster(poster.getProfile());
-    	post.setMediaUrl("https://artish-bucket.s3.us-east-2.amazonaws.com/" + storageService.uploadFile(file));
+    	if (file.isEmpty()) {
+    		post.setMediaUrl("");
+    	} else {
+    		post.setMediaUrl("https://artish-bucket.s3.us-east-2.amazonaws.com/" + storageService.uploadFile(file));
+    	}
     	postService.createPost(post);
     	return "redirect:/home";
     }
@@ -97,7 +117,7 @@ public class HomeController {
     }
     
     @GetMapping("/like/{id}")
-    public String likeIdea(@PathVariable("id") Long id, Principal principal) {
+    public String likePost(@PathVariable("id") Long id, Principal principal) {
     	String username = principal.getName();
         Login liker = loginService.findByUsername(username);
         Post post = postService.getOnePost(id);
@@ -105,15 +125,53 @@ public class HomeController {
         return "redirect:/home";
     }
     @GetMapping("/unlike/{id}")
-    public String unlikeIdea(@PathVariable("id") Long id, Principal principal) {
+    public String unlikePost(@PathVariable("id") Long id, Principal principal) {
     	String username = principal.getName();
         Login liker = loginService.findByUsername(username);
         Post post = postService.getOnePost(id);
         this.postService.removeLiker(liker.getProfile(), post);
         return "redirect:/home";
     }
+    @GetMapping("/bookmark/{id}")
+    public String bookmark(@PathVariable("id") Long id, Principal principal) {
+    	String username = principal.getName();
+        Login liker = loginService.findByUsername(username);
+        Post post = postService.getOnePost(id);
+        this.postService.addBookmarker(liker.getProfile(), post);
+        return "redirect:/home";
+    }
+    @GetMapping("/unbookmark/{id}")
+    public String unbookmark(@PathVariable("id") Long id, Principal principal) {
+    	String username = principal.getName();
+        Login liker = loginService.findByUsername(username);
+        Post post = postService.getOnePost(id);
+        this.postService.removeBookmarker(liker.getProfile(), post);
+        return "redirect:/home";
+    }
+    @GetMapping("/bookmarks")
+    public String bookmarksPage(Principal principal, Model model, @Valid @ModelAttribute("post") Post post, 
+    		@Valid @ModelAttribute("comment") Comment comment) {
+    	String username = principal.getName();
+    	
+    	model.addAttribute("currentUser", loginService.findByUsername(username));
+        model.addAttribute("bookmarkedPosts", postService.getPostsByBookmarker(username));
+        model.addAttribute("newestUsers", profileService.getAllProfiles(0,3,"id"));
+        return "bookmarksPage.jsp";
+    }
+    @GetMapping("/search")
+    public String searchPosts(Principal principal, Model model, @Valid @ModelAttribute("post") Post post, 
+    		@Valid @ModelAttribute("comment") Comment comment, @RequestParam("search") String keyword) {
+    	String username = principal.getName();
+    	
+    	model.addAttribute("currentUser", loginService.findByUsername(username));
+        model.addAttribute("bookmarkedPosts", postService.listAll(keyword));
+        model.addAttribute("newestUsers", profileService.getAllProfiles(0,3,"id"));
+        return "bookmarksPage.jsp";
+    }
+    
     @GetMapping("/u/{username}")
-    public String userPage(@PathVariable("username") String username, Principal principal, Model model, @Valid @ModelAttribute("comment") Comment comment) {
+    public String userPage(@PathVariable("username") String username, Principal principal, Model model, 
+    		@Valid @ModelAttribute("comment") Comment comment) {
     	String login = principal.getName();
     	Profile p = profileService.getOneProfile(loginService.findByUsername(username));
     	model.addAttribute("currentUser", loginService.findByUsername(login));
@@ -137,5 +195,26 @@ public class HomeController {
     		profileService.updateProfile(profile);
     		return "redirect:/u/" + username;
     	}
+    }
+    @GetMapping("/follow/{id}")
+    public String follow(@PathVariable("id") Long id, Principal principal) {
+    	String login = principal.getName();
+    	Login follower = loginService.findByUsername(login);
+    	Profile followee = profileService.getProfileById(id);
+    	this.profileService.addFollower(follower.getProfile(), followee);
+    	return "redirect:/home";
+    }
+    @GetMapping("/unfollow/{id}")
+    public String unfollow(@PathVariable("id") Long id, Principal principal) {
+    	String login = principal.getName();
+    	Login follower = loginService.findByUsername(login);
+    	Profile followee = profileService.getProfileById(id);
+    	this.profileService.removeFollower(follower.getProfile(), followee);
+    	return "redirect:/home";
+    }
+    @GetMapping("/deletePost/{id}")
+    public String deletePost(@PathVariable("id") Long id, Principal principal) {
+    	this.postService.deletePost(id);
+    	return "redirect:/home";
     }
 }

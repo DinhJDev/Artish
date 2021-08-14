@@ -28,6 +28,10 @@ public class ProfileService {
 		return this.pRepo.findByLogin(login);
 	}
 	
+	public Profile getProfileById(Long id) {
+		return this.pRepo.findById(id).orElse(null);
+	}
+	
 	// Update
 	public Profile updateProfile(Profile profile) {
 		return pRepo.save(profile);
@@ -42,5 +46,17 @@ public class ProfileService {
 		Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
 		Page<Profile> pagedResult = pRepo.findAll(paging);
 		return pagedResult.getContent();
+	}
+	
+	public void addFollower(Profile follower, Profile followee) {
+		List<Profile> currentFollowers = followee.getFollowers();
+		currentFollowers.add(follower);
+		this.pRepo.save(followee);
+	}
+	
+	public void removeFollower(Profile follower, Profile followee) {
+		List<Profile> currentFollowers = followee.getFollowers();
+		currentFollowers.remove(follower);
+		this.pRepo.save(followee);
 	}
 }

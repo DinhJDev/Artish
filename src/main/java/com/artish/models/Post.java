@@ -72,6 +72,11 @@ public class Post {
 	protected void onUpdate(){
 	    this.updatedAt = new Date();
 	}
+	
+	public Integer getLikes() {
+		return likers.size();
+	}
+	
 	public Long getId() {
 		return id;
 	}

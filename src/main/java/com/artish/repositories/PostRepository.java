@@ -2,6 +2,8 @@ package com.artish.repositories;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,4 +15,9 @@ public interface PostRepository extends JpaRepository<Post, Long>  {
 	List<Post> findAllByOrderByIdDesc();
 		
 	List<Post> findByPosterLoginUsernameOrderByIdDesc(String username);
+	List<Post> findByBookmarkersLoginUsername(String username);
+	List<Post> findByPosterFollowersLoginUsername(String username);
+	Page<Post> findAll(Pageable pageable); 
+	
+    List<Post> findByContentIgnoreCaseContainingOrPosterLoginUsernameIgnoreCaseContainingOrPosterDisplayNameIgnoreCaseContaining(String content, String username, String displayName);
 }

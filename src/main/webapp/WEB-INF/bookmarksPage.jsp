@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
     
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -35,7 +34,7 @@
 		    <div class="collapse navbar-collapse " id="navbarText">
 		      <ul class="navbar-nav me-auto ms-auto mb-2 mb-lg-0">
 		        <li class="nav-item">
-		          <a class="nav-link active" aria-current="page" href="/home">Home</a>
+		          <a class="nav-link" aria-current="page" href="/home">Home</a>
 		        </li>
 		        <!--
 		        <li class="nav-item">
@@ -43,7 +42,7 @@
 		        </li>
 		        -->
 		        <li class="nav-item">
-		          <a class="nav-link" href="/bookmarks">Bookmarks</a>
+		          <a class="nav-link active" href="/bookmarks">Bookmarks</a>
 		        </li>
 		      </ul>
 			</div>
@@ -96,31 +95,8 @@
 		   			</div>
 		   		</div>
 		   		<div class="col-6">
-			   		<div class="card">
-			   			<div class="card-body">
-			   				<div class="row">
-			   					<div class="col-1">
-						   			<img class="icon" src=<c:out value="${currentUser.profile.profilePicture}"/>>
-						   		</div>
-						   		<div class="col post-input">
-							   		<form:form method="POST" enctype="multipart/form-data" action="/createPost" modelAttribute="post">
-										<div class="input-group">
-											<form:input path="content" class="form-control" placeholder="Create post..."/>
-											<label class="input-group-text">
-												<i class="far fa-image"></i>
-												<input type="file" name="file" accept=".jpg, .jpeg, .png, .gif" class="form-control" hidden/>
-											</label>
-										</div>
-											<div class="mt-3 d-md-flex justify-content-md-end">
-												<button class="btn btn-primary">Post</button>
-											</div>
-							   		</form:form>
-							   	</div>
-					   		</div>
-				   		</div>
-			   		</div>
-			   		<c:forEach items="${recentPosts}" var="post">
-			   			<div class="card mt-3 post">
+			   		<c:forEach items="${bookmarkedPosts}" var="post">
+			   			<div class="card mb-3 post">
 			   				<div class="card-body">
 				   				<div class="row">
 				   					<div class="col-1">

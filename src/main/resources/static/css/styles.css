@@ -1,3 +1,8 @@
+body {
+	font-family: 'Montserrat', sans-serif;
+	background-color: #212529;
+}
+
 .welcomeMain {
 	display: flex;
 }
@@ -53,6 +58,27 @@ footer {
 	height: 3vh;
 }
 
+.navbar-brand {
+	font-size: 24px;
+	font-weight: 600;
+	margin-left: 80px;
+}
+
+.nav-link.active {
+  border-bottom: 2px solid #007BFF;
+}
+
+.navbar .username {
+	font-size: 16px;
+	font-weight: 500;
+	margin: 0;
+	color: #FFF;
+}
+
+.navbar .icon {
+	margin-left: 8px;
+}
+
 .icon {
 	border-radius: 10px;
 	height: 48px;
@@ -64,14 +90,6 @@ footer {
 
 main {
 	padding-top: 80px;
-	background-color: #212529;
-	font-family: 'Montserrat', sans-serif;
-}
-
-.postMedia {
-	border-radius: 1%;
-	width: fill;
-	height: auto;
 }
 
 .profile .icon {
@@ -142,13 +160,87 @@ main {
 .border-line {
   border-right: 1px solid rgba(33,37,41, .25);
 }
+#search {
+	background: none;
+	color: #F1F1F1;
+	border-radius: 25px;
+	border-color: #F1F1F1;
+}
+#search-addon {
+	background: none;
+	color: #F1F1F1;
+	border: none;
+}
 
-.fas.fa-heart {
+.post .media{
+	margin: auto 0;
+}
+
+.postMedia {
+	border-radius: 25px;
+	width: fill;
+	height: auto;
+	display: box;
+	padding: 0;
+}
+
+.post .fas.fa-heart {
+	color: #DC143C;
+}
+.post .fas.fa-bookmark {
 	color: #DC143C;
 }
 
 .post-header {
 	height: 24px;
+	margin-left: 15px;
+	color: #AEAEAE;
+}
+.post .display-name {
+	font-weight: 700;
+	color: #FFF;
+}
+.post .username {
+	font-weight: 500;
+	color: #AEAEAE;
+}
+.post .text-muted {
+	color: #AEAEAE !important;
+}
+
+.post-header p {
+	margin: 0;
+}
+.post-caption {
+	margin-left: 0;
+	margin-top: 4px;
+	margin-bottom: 0;
+}
+
+.post .fa-bookmark {
+	position: relative;
+	left: 90%;
+	bottom: 75px;
+	font-size: 30px;
+}
+
+.post-input {
+	margin-left: 15px;
+}
+
+.post .statistics {
+	font-size: 16px;
+}
+
+.post i {
+	height: 30px;
+	font-size: 24px;
+	color: #F1F1F1;
+	margin-right: 5px;
+	margin-top:5px;
+}
+.post .fa-comment-alt {
+	margin-left: 10px;
 }
 
 .card {
@@ -209,7 +301,8 @@ main {
 }
 
 .circle:hover {
-	
+	border: 1px solid #007BFF;
+	background:rgba(0, 123, 255, 25%);
 }
 
 .follow-col {
@@ -225,4 +318,57 @@ main {
 
 .see-more a, a:hover {
 	color: #007BFF !important;
+}
+
+.btn-primary {
+	background-color: #007BFF;
+}
+
+.btn-primary:hover {
+	background-color: #007BFF;
+}
+
+.explore button {
+	background: none;
+	border: none;
+}
+.explore button i {
+	margin-right: 10px;
+}
+.post .statistics {
+	font-size: 16px;
+}
+
+.post i {
+	height: 30px;
+	font-size: 24px;
+	color: #F1F1F1;
+	margin-right: 5px;
+	margin-top:5px;
+}
+.post .fa-comment-alt {
+	margin-left: 10px;
+}
+
+.post .dropdown-toggle {
+	background: none;
+	border: none;
+}
+
+.post dropdown-toggle {
+	max-width: 50px;
+	padding: 0 auto;
+	margin: 0 0 auto auto;
+}
+
+.post .fa-ellipsis-h {
+	margin: 0;
+}
+
+.post .dropdown-toggle::after {
+	border-bottom: none;
+}
+
+.post .dropdown-menu {
+	background-color: #3D3D3D;
 }

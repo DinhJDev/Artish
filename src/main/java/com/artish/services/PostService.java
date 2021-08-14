@@ -3,6 +3,11 @@ package com.artish.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+
 import com.artish.models.Profile;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +22,26 @@ public class PostService {
 	// Display All
 	public List<Post> AllPosts(){
 		return this.pRepo.findAllByOrderByIdDesc();
+	}
+	public List<Post> getAllPostsDesc(Integer pageNo, Integer pageSize, String sortBy) {
+		Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
+		Page<Post> pagedResult = pRepo.findAll(paging);
+		return pagedResult.getContent();
+	}
+	public List<Post> getAllPostsAsc(Integer pageNo, Integer pageSize, String sortBy) {
+		Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).ascending());
+		Page<Post> pagedResult = pRepo.findAll(paging);
+		return pagedResult.getContent();
+	}
+	public List<Post> getFollowingPosts(String username){
+		return this.pRepo.findByPosterFollowersLoginUsername(username);
+	}
+	
+	public List<Post> listAll(String keyword) {
+		if (keyword != null) {
+			return pRepo.findByContentIgnoreCaseContainingOrPosterLoginUsernameIgnoreCaseContainingOrPosterDisplayNameIgnoreCaseContaining(keyword, keyword, keyword);
+		}
+		return pRepo.findAll();
 	}
 	
 	// Create
@@ -63,5 +88,9 @@ public class PostService {
 		List<Profile> currentBookmarkers = post.getBookmarkers();
 		currentBookmarkers.remove(profile);
 		this.pRepo.save(post);
+	}
+	
+	public List<Post> getPostsByBookmarker(String username) {
+		return this.pRepo.findByBookmarkersLoginUsername(username);
 	}
 }
