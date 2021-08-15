@@ -248,4 +248,11 @@ public class HomeController {
     	this.postService.deletePost(id);
     	return "redirect:/home";
     }
+    @GetMapping("/u/{username}/status/{id}")
+    public String postPage(@PathVariable("id") Long id, Principal principal, Model model, @Valid @ModelAttribute("comment") Comment comment) {
+    	String login = principal.getName();
+    	model.addAttribute("currentUser", loginService.findByUsername(login));
+    	model.addAttribute("post", postService.getOnePost(id));
+    	return "postPage.jsp";
+    }
 }

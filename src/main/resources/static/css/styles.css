@@ -156,6 +156,10 @@ main {
 	padding-bottom: 0;
 }
 
+.new-artists .card-footer {
+	padding-bottom: 10px;
+}
+
 .grid .row {
   display: flex;
   flex-wrap: wrap;
@@ -398,4 +402,50 @@ main {
 
 .post .dropdown-menu {
 	background-color: #3D3D3D;
+}
+
+.post-page .postMedia {
+	height: 100%;
+	width: 100%;
+	max-width: 95%;
+	max-height: 95%;
+	margin: 30px 10px 10px 10px;
+}
+.post-page {
+	margin-top: 10px;
+}
+
+.post-page .post-row .icon {
+	height: 60px;
+	width: 60px;
+}
+
+.post-page .fa-bookmark {
+	position: relative;
+	bottom: 85px !important;
+	left: 82% !important;
+}
+.post-row .col-2{
+	padding: 0;
+}
+.post-row .col{
+	padding: 0;
+}
+.post-row {
+	margin-top: 30px;
+}
+
+.post-page .statistics {
+	margin-top: 20px;
+}
+
+.post-page .comment-form {
+	position: relative;
+	right: 11px;
+}
+.comments {
+	margin-top: 50px;
+}
+.comments p{
+	margin-bottom: 0px;
 }
