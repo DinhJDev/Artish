@@ -96,7 +96,7 @@
 		   		</div>
 		   		<div class="col-6">
 			   		<c:forEach items="${bookmarkedPosts}" var="post">
-			   			<div class="card mb-3 post">
+			   			<div class="card mt-3 post">
 			   				<div class="card-body">
 				   				<div class="row">
 				   					<div class="col-1">
@@ -121,9 +121,11 @@
 							   			</div>
 						   			</div>
 						   		</div>
+						   		<a href="/u/${post.poster.login.username}/status/${post.id}">
 						   		<div class="row media">
 						   			<img class="postMedia mt-3" src="${post.mediaUrl}">
 						   		</div>
+						   		</a>
 			   				</div>
 			   				<div class="card-footer">
 			   					<div class="row">
@@ -142,7 +144,9 @@
 											</c:otherwise>
 										</c:choose>
 										<c:out value="${post.likers.size()}"/>
+										<a href="/u/${post.poster.login.username}/status/${post.id}">
 				   						<i class="far fa-comment-alt"></i><c:out value="${post.comments.size()}"/>
+				   						</a>
 			   						</p>
 			   						</div>
 			   						<div class="btn-group dropup col-md-2 ml-auto">
@@ -151,11 +155,31 @@
 									  	</button>
 									  	<ul class="dropdown-menu">
 									  		<li>
-										    	<form id="logoutForm" method="GET" action="/deletePost/<c:out value='${post.id}'/>">
-											        <button class="dropdown-item text-danger">
-														<i class="far fa-trash-alt text-danger"></i> Delete
-													</button>
-												</form>
+										    	<c:choose>
+													<c:when test="${post.poster.followers.contains(currentUser.profile)}">
+														<form method="get" action="/unfollow/<c:out value='${post.poster.id}'/>">
+															<button class="dropdown-item text-white">
+													   			<i class="fas fa-user-minus"></i> Unfollow
+															</button>
+														</form>
+													</c:when>
+													<c:otherwise>
+														<form method="get" action="/follow/<c:out value='${post.poster.id}'/>">
+															<button class="dropdown-item text-white">
+																<i class="fas fa-user"></i> Follow
+															</button>
+														</form>
+													</c:otherwise>
+												</c:choose>
+											</li>
+									  		<li>
+								  				<c:if test="${post.poster == currentUser.profile}">
+											    	<form id="logoutForm" method="GET" action="/deletePost/<c:out value='${post.id}'/>">
+												        <button class="dropdown-item text-danger">
+															<i class="far fa-trash-alt text-danger"></i> Delete
+														</button>
+													</form>
+												</c:if>
 											</li>
 									  	</ul>
 									</div>
