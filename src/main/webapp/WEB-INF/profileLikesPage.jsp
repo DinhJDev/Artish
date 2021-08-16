@@ -79,11 +79,6 @@
 						   			<i class="fas fa-user-friends"></i>Following
 								</button>
 							</form>
-							<form method="get" action="/home/popular">
-								<button class="btn btn-primary">
-						   			<i class="fas fa-fire"></i>Popular
-								</button>
-							</form>
 							<form method="get" action="/home/latest">
 								<button class="btn btn-primary">
 						   			<i class="far fa-clock"></i>Latest
@@ -146,7 +141,7 @@
 							   		</div>
 							   		<div class="col">
 							   			<div class="post-header">
-							   				<p class="text-muted"><a class="display-name" href="/u/<c:out value='${post.poster.login.username}'/>"><c:out value="${post.poster.displayName}"/></a> <a class="username" href="/u/<c:out value='${post.poster.login.username}'/>">@<c:out value="${post.poster.login.username}"/></a> - <fmt:formatDate pattern="MMM, dd" value="${post.createdAt}"/></p>
+							   				<p class="text-muted"><a class="display-name" href="/u/<c:out value='${post.poster.login.username}'/>"><c:out value="${post.poster.displayName}"/></a> <a class="username" href="/u/<c:out value='${post.poster.login.username}'/>">@<c:out value="${post.poster.login.username}"/></a><a class="username" href="/u/${post.poster.login.username}/status/${post.id}"> - <fmt:formatDate pattern="MMM, dd" value="${post.createdAt}"/></a></p>
 							   				<p class="post-caption"><c:out value="${post.content}"/></p>
 							   				<c:choose>
 											<c:when test="${post.bookmarkers.contains(currentUser.profile)}">
@@ -197,31 +192,33 @@
 									  	</button>
 									  	<ul class="dropdown-menu">
 									  		<li>
-										    	<c:choose>
-													<c:when test="${post.poster.followers.contains(currentUser.profile)}">
-														<form method="get" action="/unfollow/<c:out value='${post.poster.id}'/>">
-															<button class="dropdown-item text-white">
-													   			<i class="fas fa-user-minus"></i> Unfollow
+									  			<c:choose>
+									  				<c:when test="${post.poster == currentUser.profile}">
+												    	<form id="logoutForm" method="GET" action="/deletePost/<c:out value='${post.id}'/>">
+													        <button class="dropdown-item text-danger">
+																<i class="far fa-trash-alt text-danger"></i> Delete
 															</button>
 														</form>
 													</c:when>
 													<c:otherwise>
-														<form method="get" action="/follow/<c:out value='${post.poster.id}'/>">
-															<button class="dropdown-item text-white">
-																<i class="fas fa-user"></i> Follow
-															</button>
-														</form>
+														<c:choose>
+															<c:when test="${post.poster.followers.contains(currentUser.profile)}">
+																<form method="get" action="/unfollow/<c:out value='${post.poster.id}'/>">
+																	<button class="dropdown-item text-white">
+															   			<i class="fas fa-user-minus"></i> Unfollow
+																	</button>
+																</form>
+															</c:when>
+															<c:otherwise>
+																<form method="get" action="/follow/<c:out value='${post.poster.id}'/>">
+																	<button class="dropdown-item text-white">
+																		<i class="fas fa-user"></i> Follow
+																	</button>
+																</form>
+															</c:otherwise>
+														</c:choose>
 													</c:otherwise>
 												</c:choose>
-											</li>
-									  		<li>
-								  				<c:if test="${post.poster == currentUser.profile}">
-											    	<form id="logoutForm" method="GET" action="/deletePost/<c:out value='${post.id}'/>">
-												        <button class="dropdown-item text-danger">
-															<i class="far fa-trash-alt text-danger"></i> Delete
-														</button>
-													</form>
-												</c:if>
 											</li>
 									  	</ul>
 									</div>
@@ -250,8 +247,10 @@
 							   			<a href="/u/<c:out value='${user.login.username}'/>"><img class="icon" src=<c:out value="${user.profilePicture}"/>></a>
 							   		</div>
 							   		<div class="col">
+							   		<a href="/u/<c:out value='${user.login.username}'/>">
 						   				<p class="display-name"><c:out value="${user.displayName}"/></p>
 						   				<p class="username">@<c:out value="${user.login.username}"/></p>
+						   			</a>
 							   		</div>
 							   		<div class="col follow-col">
 							  		<c:choose>

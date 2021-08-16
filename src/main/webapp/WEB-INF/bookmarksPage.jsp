@@ -81,11 +81,6 @@
 						   			<i class="fas fa-user-friends"></i>Following
 								</button>
 							</form>
-							<form method="get" action="/home/popular">
-								<button class="btn btn-primary">
-						   			<i class="fas fa-fire"></i>Popular
-								</button>
-							</form>
 							<form method="get" action="/home/latest">
 								<button class="btn btn-primary">
 						   			<i class="far fa-clock"></i>Latest

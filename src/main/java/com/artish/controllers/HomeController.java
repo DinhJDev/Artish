@@ -76,15 +76,8 @@ public class HomeController {
         model.addAttribute("newestUsers", profileService.getAllProfiles(0,3,"id"));
         return "homePage.jsp";
     }
-    @GetMapping(value = {"/home/popular", "/home"})
-    public String popular(Principal principal, Model model, @Valid @ModelAttribute("post") Post post, @Valid @ModelAttribute("comment") Comment comment) {
-        String username = principal.getName();
-        model.addAttribute("currentUser", loginService.findByUsername(username));
-        model.addAttribute("recentPosts", postService.getAllPostsDesc(0,10,"likers"));
-        model.addAttribute("newestUsers", profileService.getAllProfiles(0,3,"id"));
-        return "homePage.jsp";
-    }
-    @GetMapping(value = {"/home/latest"})
+
+    @GetMapping(value = {"/home/latest", "/home"})
     public String latest(Principal principal, Model model, @Valid @ModelAttribute("post") Post post, @Valid @ModelAttribute("comment") Comment comment) {
         String username = principal.getName();
         model.addAttribute("currentUser", loginService.findByUsername(username));
