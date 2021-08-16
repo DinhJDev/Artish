@@ -1,8 +1,8 @@
 cloud:
   aws:
     credentials:
-      access-key: AKIA2V4OG4ETH45LUGOS
-      secret-key: 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
+      access-key: AKIA2V4OG4ETIKY4HGC2
+      secret-key: 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
     region:
       static: us-east-2
     stack:
@@ -18,6 +18,7 @@ spring:
       enabled: true
       file-size-threshold: 2MB
       max-file-size: 5MB
-      max-request-size: 10MB
+      max-request-size: 10MB
+
 server:
   port: 8080
