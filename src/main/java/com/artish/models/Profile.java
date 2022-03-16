@@ -62,6 +62,7 @@ public class Profile {
 		inverseJoinColumns = @JoinColumn(name = "post_id")
 	)
 	private List<Post> postsLiked;
+	
 	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(
 		name = "bookmarkers_posts",
@@ -69,6 +70,7 @@ public class Profile {
 		inverseJoinColumns = @JoinColumn(name = "post_id")
 	)
 	private List<Post> postsBookmarked;
+	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(
 		name = "followers_followee",

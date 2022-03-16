@@ -106,7 +106,7 @@ public class HomeController {
         comment.setPost(post);
         comment.setCommenter(poster.getProfile());
         commentService.createComment(comment);
-        return "redirect:/home";
+        return "redirect:/status/"+postId;
     }
     
     @GetMapping("/like/{id}")
@@ -241,7 +241,7 @@ public class HomeController {
     	this.postService.deletePost(id);
     	return "redirect:/home";
     }
-    @GetMapping("/u/{username}/status/{id}")
+    @GetMapping(value = {"/u/{username}/status/{id}","status/{id}"})
     public String postPage(@PathVariable("id") Long id, Principal principal, Model model, @Valid @ModelAttribute("comment") Comment comment) {
     	String login = principal.getName();
     	model.addAttribute("currentUser", loginService.findByUsername(login));
